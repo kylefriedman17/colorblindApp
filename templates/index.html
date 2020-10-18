@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
+<link href="https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-<h1>Image Upload</h1>
+<div class="index">
+<h1>kholo</h1>
 <form id="upload form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
     <input type="file" name="file" accept="image/*">
     <input type="submit" value="Upload">
 </form>
+</div>
 {% endblock %}
