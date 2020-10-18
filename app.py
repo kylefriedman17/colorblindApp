@@ -1,5 +1,6 @@
 import os
 from os import path, walk
+import compareImages
 from flask import Flask, render_template, url_for, request, redirect
 
 app = Flask(__name__)
@@ -30,9 +31,10 @@ def upload():
     os.system("daltonize.py -s -t p static/input.jpg static/output.jpg")
 
     chosen_type = "Protanopia (Missing red cone)"
+    mse = compareImages.main()
     
     # Renders the uploaded template, passes the file name that was assigned to the uploaded file and the chosen type
-    return render_template("uploaded.html", chosen_type=chosen_type, input_filename='input.jpg', output_filename='output.jpg')
+    return render_template("uploaded.html", chosen_type=chosen_type, input_filename='input.jpg', output_filename='output.jpg', mse=mse)
 
 # Updates the uploaded.html template with the new select value and the updated output image
 @app.route("/display/", methods=["POST"])
@@ -50,7 +52,9 @@ def display():
     else:
         chosen_type = "Protanopia (Missing red cone)"
 
-    return render_template("uploaded.html", chosen_type=chosen_type, input_filename='input.jpg', output_filename='output.jpg')
+    mse = compareImages.main()
+
+    return render_template("uploaded.html", chosen_type=chosen_type, input_filename='input.jpg', output_filename='output.jpg', mse=mse)
 
 # Fix for the shift refresh issue where static does not update when render_template is used
 @app.after_request
