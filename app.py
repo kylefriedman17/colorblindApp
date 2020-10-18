@@ -13,7 +13,7 @@ def index():
 @app.route("/upload", methods=["POST"])
 def upload():
     """Page displayed after an image is uploaded. Currently it just displays the image and has a button to go back to the landing page."""
-    target = os.path.join(APP_ROOT, 'static/images/')
+    target = os.path.join(APP_ROOT, 'static')
     print(target)
 
     if not os.path.isdir(target):
