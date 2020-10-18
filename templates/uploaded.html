@@ -33,6 +33,7 @@
 
 <div class = "percent-difference">
     <p>The MSE of these two images is {{mse}}</p>
+    <p>If the MSE is lesser than 400, the media is color-blind friendly. With a MSE higher than 400, it becomes more difficult for people with color-blindness to see.</p>
 </div>
 <form id="back_form" action="{{ url_for('index') }}" method="GET">
     <input type="submit" value="Upload another image">
