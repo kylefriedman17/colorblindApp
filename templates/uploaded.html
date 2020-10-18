@@ -19,12 +19,12 @@
 </div>
 
 <div class = "original-image">
-    <img class="img-upload" src="{{url_for('static', filename='input.jpg')}}">
+    <img class="img-upload" src="{{url_for('static', filename=input_filename)}}">
     <span class="caption">Original image</span>
 </div>
 
 <div class = "output-image">
-    <img class="img-upload" src="{{url_for('static', filename='output.jpg')}}">
+    <img class="img-upload" src="{{url_for('static', filename=output_filename)}}">
     <span class="caption">{{chosen_type}}</span>
 </div>
 

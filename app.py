@@ -31,11 +31,11 @@ def upload():
     chosen_type = "Protanopia (Missing red cone)"
     
     # Renders the uploaded template, passes the file name that was assigned to the uploaded file and the chosen type
-    return render_template("uploaded.html", chosen_type=chosen_type)
+    return render_template("uploaded.html", chosen_type=chosen_type, input_filename='input.jpg', output_filename='output.jpg')
 
 # This isn't finished but I think the uploaded.html file will need to run this as an action when the select form is changed? And then somehow it passes the original image as well as the new outputed corrected image
 
-@app.route("/display/", methods=["POST", "GET"])
+@app.route("/display/", methods=["POST"])
 def display():
     type_value = request.form.get("types")
     os.system(f"daltonize.py -s -t {type_value} static/input.jpg static/output.jpg")
@@ -50,7 +50,7 @@ def display():
     else:
         chosen_type = "Protanopia (Missing red cone)"
 
-    return render_template("uploaded.html", chosen_type=chosen_type)
+    return render_template("uploaded.html", chosen_type=chosen_type, input_filename='input.jpg', output_filename='output.jpg')
 
 if __name__ == "__main__":
     app.run()
