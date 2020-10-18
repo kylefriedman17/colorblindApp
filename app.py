@@ -7,27 +7,35 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 @app.route("/")
 def index():
-    """Landing page. Has an image upload button."""
+    # Renders the index.html file
     return render_template("index.html")
 
-@app.route("/upload", methods=["POST"])
+@app.route("/upload/", methods=["POST", "GET"])
 def upload():
-    """Page displayed after an image is uploaded. Currently it just displays the image and has a button to go back to the landing page."""
+    # Sets the target path for the file to be added to
     target = os.path.join(APP_ROOT, 'static')
     print(target)
 
+    # Creates the path in case it doesn't exist
     if not os.path.isdir(target):
         os.mkdir(target)
 
-    for file in request.files.getlist("file"):
-        print(file)
-        filename = file.filename
-        destination = "/".join([target, filename])
-        print(destination)
-        file.save(destination)
-    return render_template("uploaded.html", image_name=filename)
+    # Finding files in the requests, adding them to the target destination with the name as their filename
+    file = request.files["file"]
+    filename = file.filename
+    destination = "/".join([target, filename])
+    file.save(destination)
+    
+    # Gets the selection from the select in uploaded.html
+    chosen_type = request.form.get("types")
+    
+    # Renders the uploaded template, passes the file name that was assigned to the uploaded file and the chosen type
+    return render_template("uploaded.html", image_name=filename, chosen_type=chosen_type)
 
-
+# This isn't finished but I think the uploaded.html file will need to run this as an action when the select form is changed? And then somehow it passes the original image as well as the new outputed corrected image
+@app.route("/display/", methods=["POST", "GET"])
+def display():
+    return render_template("uploaded.html", image_name=filename, chosen_type=chosen_type)
 
 if __name__ == "__main__":
     app.run()
