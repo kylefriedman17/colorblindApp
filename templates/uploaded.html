@@ -6,23 +6,23 @@
 
 {% block body %}
 <div>
-    <form action="{{ url_for('upload') }}">
+    <form id="display_output" action="{{ url_for('display') }}" method="POST">
         <label for="type_options">Select the type of colorblindness to simulate:</label>
         <select name="types" id="types">
-            <option value="achromatopsia">Achromatopsia (Monochromatism)</option>
-            <option value="protanopia">Protanopia (Missing red cone)</option>
-            <option value="deuteranopia">Deuteranopia (Missing green cone)</option>
-            <option value="tritanopia">Tritanopia (Missing blue cone)</option>
+            <option value="p">Protanopia (Missing red cone)</option>
+            <option value="d">Deuteranopia (Missing green cone)</option>
+            <option value="t">Tritanopia (Missing blue cone)</option>
         </select>
+        <input type="submit" value="Simulate">
     </form>
 </div>
 
 <div class = "original-image">
-    <img class="img-upload" src="{{url_for('static', filename=image_name)}}">
+    <img class="img-upload" src="{{url_for('static', filename='input.jpg')}}">
     <p>Original image</p>
 </div>
 <div class = "output-image">
-    <img class="img-upload" src="{{url_for('static', filename=image_name)}}">
+    <img class="img-upload" src="{{url_for('static', filename='output.jpg')}}">
     <p>{{chosen_type}}</p>
 </div>
 

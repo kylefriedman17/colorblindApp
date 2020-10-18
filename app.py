@@ -22,20 +22,35 @@ def upload():
 
     # Finding files in the requests, adding them to the target destination with the name as their filename
     file = request.files["file"]
-    filename = file.filename
-    destination = "/".join([target, filename])
+    destination = "/".join([target, 'input.jpg'])
     file.save(destination)
-    
-    # Gets the selection from the select in uploaded.html
-    chosen_type = request.form.get("types")
+
+    # Use daltonize
+    os.system("daltonize.py -s -t p static/input.jpg static/output.jpg")
+
+    chosen_type = "Protanopia (Missing red cone)"
     
     # Renders the uploaded template, passes the file name that was assigned to the uploaded file and the chosen type
-    return render_template("uploaded.html", image_name=filename, chosen_type=chosen_type)
+    return render_template("uploaded.html", chosen_type=chosen_type)
 
 # This isn't finished but I think the uploaded.html file will need to run this as an action when the select form is changed? And then somehow it passes the original image as well as the new outputed corrected image
+
 @app.route("/display/", methods=["POST", "GET"])
 def display():
-    return render_template("uploaded.html", image_name=filename, chosen_type=chosen_type)
+    type_value = request.form.get("types")
+    os.system(f"daltonize.py -s -t {type_value} static/input.jpg static/output.jpg")
+    print(type_value)
+
+    if type_value == 'p':
+        chosen_type = "Protanopia (Missing red cone)"
+    elif type_value == 'd':
+        chosen_type = "Deuteranopia (Missing green cone)"
+    elif type_value == 't':
+        chosen_type = "Tritanopia (Missing blue cone)"
+    else:
+        chosen_type = "Protanopia (Missing red cone)"
+
+    return render_template("uploaded.html", chosen_type=chosen_type)
 
 if __name__ == "__main__":
     app.run()
