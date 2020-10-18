@@ -1,4 +1,5 @@
 import os
+from os import path, walk
 from flask import Flask, render_template, url_for, request, redirect
 
 app = Flask(__name__)
@@ -33,8 +34,7 @@ def upload():
     # Renders the uploaded template, passes the file name that was assigned to the uploaded file and the chosen type
     return render_template("uploaded.html", chosen_type=chosen_type, input_filename='input.jpg', output_filename='output.jpg')
 
-# This isn't finished but I think the uploaded.html file will need to run this as an action when the select form is changed? And then somehow it passes the original image as well as the new outputed corrected image
-
+# Updates the uploaded.html template with the new select value and the updated output image
 @app.route("/display/", methods=["POST"])
 def display():
     type_value = request.form.get("types")
@@ -51,6 +51,13 @@ def display():
         chosen_type = "Protanopia (Missing red cone)"
 
     return render_template("uploaded.html", chosen_type=chosen_type, input_filename='input.jpg', output_filename='output.jpg')
+
+# Fix for the shift refresh issue where static does not update when render_template is used
+@app.after_request
+def apply_caching(response):
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    print('cache changes applied')
+    return response
 
 if __name__ == "__main__":
     app.run()
