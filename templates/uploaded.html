@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<p>Voila file uploaded</p>
+<img src="{{url_for('static', filename='images/image_name')}}" alt="">
+<form id="back_form" action="{{ url_for('index') }}" method="GET">
+    <input type="submit" value="Upload another image">
+</form>
+{% endblock %}
