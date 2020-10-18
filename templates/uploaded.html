@@ -14,19 +14,22 @@
             <option value="d">Deuteranopia (Missing green cone)</option>
             <option value="t">Tritanopia (Missing blue cone)</option>
         </select>
-        <input type="submit" value="Simulate">
+        <input style="margin-top: 25px;" type="submit" value="Simulate">
     </form>
 </div>
 
+<span class="caption">Original image</span>
 <div class = "original-image">
     <img class="img-upload" src="{{url_for('static', filename=input_filename)}}">
-    <span class="caption">Original image</span>
-</div>
+</div>    
+    
 
+<span class="caption">{{chosen_type}}</span>
 <div class = "output-image">
     <img class="img-upload" src="{{url_for('static', filename=output_filename)}}">
-    <span class="caption">{{chosen_type}}</span>
-</div>
+</div>    
+    
+
 
 <form id="back_form" action="{{ url_for('index') }}" method="GET">
     <input type="submit" value="Upload another image">
