@@ -1,6 +1,6 @@
 # problems so far:
-	# images need to have the same resolution
-	# images with different color channels won't work#
+# images need to have the same resolution
+# images with different color channels won't work
 
 from PIL import Image, ImageFile
 from SSIM_PIL import compare_ssim
@@ -20,7 +20,10 @@ def main():
 
 # compares images and returns percent difference
 def compare_images(imageA, imageB):
+	#returns a float -1 to 1, 1 is perfect similarity
 	compare = compare_ssim(img1, img2)
+	
+	#convert to percentage
 	compare += 1
 	compare = 2 - compare
 	compare /= 2
